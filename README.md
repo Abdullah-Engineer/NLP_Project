@@ -45,8 +45,8 @@ This repository includes:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/urdu-tweet-sentiment-analysis.git
-cd urdu-tweet-sentiment-analysis
+git clone https://github.com/Abdullah-Engineer/NLP_Project.git
+cd NLP_Project
 ```
 
 ### 2. Install Dependencies
