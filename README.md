@@ -245,7 +245,3 @@ This project is licensed under the [MIT License](LICENSE).
 - [PyTorch](https://pytorch.org/) for the deep learning framework.
 - [Gradio](https://gradio.app/) for making it easy to create interactive ML demos.
 ```
-
----
-
-This version follows a clear Markdown structure that should look great in your GitHub repository. Let me know if you need any further adjustments!
