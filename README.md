@@ -1,8 +1,4 @@
-Below is the complete README.md content in proper Markdown format. You can copy and paste this directly into your README.md file in your GitHub repository:
 
----
-
-```markdown
 # Urdu Tweet Sentiment Analysis
 
 ## Introduction
