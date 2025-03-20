@@ -244,4 +244,3 @@ This project is licensed under the [MIT License](LICENSE).
 - [Hugging Face](https://huggingface.co/) for providing state-of-the-art NLP models.
 - [PyTorch](https://pytorch.org/) for the deep learning framework.
 - [Gradio](https://gradio.app/) for making it easy to create interactive ML demos.
-```
