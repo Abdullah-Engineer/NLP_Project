@@ -1,4 +1,3 @@
-
 # Urdu Tweet Sentiment Analysis
 
 ## Introduction
@@ -9,37 +8,30 @@ This project is designed to perform sentiment analysis on Urdu tweets using a fi
 
 The implementation leverages libraries such as [Hugging Face Transformers](https://huggingface.co/), [PyTorch](https://pytorch.org/), and [Gradio](https://gradio.app/) to build, train, and deploy the model through an interactive web interface.
 
----
+## Live Demo
+Experience the live demo on Hugging Face Spaces: [Urdu Tweet Sentiment Analysis Demo](https://huggingface.co/spaces/abdullah123456/NLP_Project_Sentiment_Analysis)
 
 ## Project Overview
-This repository includes:
+This repository includes code for:
 - **Data Preprocessing & Balancing:**  
-  Steps to clean the raw dataset, map raw sentiment labels into simplified categories, and create a balanced dataset.
-  
+  Cleaning the raw dataset, mapping raw sentiment labels into simplified categories, and creating a balanced dataset.
 - **Model Training:**  
-  Code to tokenize data, set up training parameters, and fine-tune a pre-trained transformer (e.g., XLM-Roberta) for sentiment classification.
-  
+  Tokenizing data, setting up training parameters, and fine-tuning a pre-trained transformer (e.g., XLM-Roberta) for sentiment classification.
 - **Evaluation:**  
-  Generation of evaluation metrics (accuracy, precision, recall, F1 score, confusion matrix) and detailed classification reports.
-  
+  Generating evaluation metrics (accuracy, precision, recall, F1 score, confusion matrix) and detailed classification reports.
 - **Web Interface:**  
-  A Gradio-based web app for real-time sentiment prediction on new Urdu tweets.
-  
+  A Gradio-based web application for real-time sentiment prediction on new Urdu tweets.
 - **Model Saving & Inference:**  
-  Scripts to save the trained model and tokenizer, and to perform predictions on new text inputs.
-
----
+  Scripts for saving the trained model and tokenizer, and performing predictions on new inputs.
 
 ## Technologies Used
 - **Python**: Main programming language
 - **Transformers**: For pre-trained transformer models
-- **PyTorch**: Deep learning framework for model training and inference
+- **PyTorch**: Deep learning framework for training and inference
 - **Pandas & NumPy**: Data manipulation and numerical operations
 - **Scikit-learn**: Evaluation metrics and dataset splitting
-- **Gradio**: User-friendly web interface for model inference
+- **Gradio**: Interactive web interface for model inference
 - **openpyxl**: Reading and writing Excel files (.xlsx)
-
----
 
 ## Installation & Setup
 
@@ -50,17 +42,17 @@ cd NLP_Project
 ```
 
 ### 2. Install Dependencies
-Ensure you have Python 3.7 or later installed. Install required packages using:
+Ensure you have Python 3.7 or later installed. Install the required packages using:
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 3. Google Colab / Local Setup
-- If using **Google Colab**, mount your Google Drive and install dependencies via pip commands in your notebook.
-- For local development, ensure that all dependencies in `requirements.txt` are installed.
+- **Google Colab:** Mount your Google Drive and install dependencies via pip commands in your notebook.
+- **Local Setup:** Ensure that all dependencies listed in `requirements.txt` are installed.
 
 ### 4. Pretrained Model and Tokenizer
-The model is hosted on Hugging Face. You can load it in your code using:
+Load the pretrained model and tokenizer from Hugging Face using:
 ```python
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
@@ -68,8 +60,6 @@ model_path = "abdullah123456/Sentiment_Analysis_Urdu_NLP"
 model = AutoModelForSequenceClassification.from_pretrained(model_path)
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 ```
-
----
 
 ## Data Preparation
 The raw dataset is stored in an Excel file containing Urdu tweets and their sentiment labels. The preprocessing steps include:
@@ -94,29 +84,27 @@ The raw dataset is stored in an Excel file containing Urdu tweets and their sent
    Sampling an equal number of examples for each sentiment class.
    ```python
    subset_per_class = target_size // num_classes
-   
+
    # Splitting dataset by classes
    df_neg = df[df['mapped_category'] == 'negative']
    df_neu = df[df['mapped_category'] == 'neutral']
    df_pos = df[df['mapped_category'] == 'positive']
-   
+
    # Sampling each class
    df_neg_subset = df_neg.sample(n=subset_per_class, random_state=42)
    df_neu_subset = df_neu.sample(n=subset_per_class, random_state=42)
    df_pos_subset = df_pos.sample(n=subset_per_class, random_state=42)
-   
+
    # Combining & shuffling
    df_subset_balanced = pd.concat([df_neg_subset, df_neu_subset, df_pos_subset], ignore_index=True)
    df_subset_balanced = df_subset_balanced.sample(frac=1, random_state=42).reset_index(drop=True)
    ```
 
 4. **Conversion to Hugging Face Dataset:**  
-   This enables efficient tokenization, batching, and integration with the Transformers training pipeline.
+   Convert the balanced dataset into a Hugging Face dataset to leverage efficient tokenization, batching, and integration with the Transformers training pipeline.
 
 5. **Splitting the Dataset:**  
-   Dividing the dataset into training, validation, and test splits to ensure proper model evaluation and to prevent overfitting.
-
----
+   Divide the dataset into training, validation, and test sets to ensure proper model evaluation and prevent overfitting.
 
 ## Model Training
 The model is fine-tuned using the following training parameters:
@@ -140,28 +128,23 @@ training_args = TrainingArguments(
 
 ### Key Concepts:
 - **Learning Rate (2e-5):**  
-  Sets the step size for weight updates during training. A small value is chosen to carefully fine-tune the pre-trained model without significant deviation.
-  
+  A small learning rate ensures fine-tuning of the pre-trained model without significant deviation.
 - **Batch Size:**  
-  Determines the number of samples processed in one training step. A batch size of 16 is used to balance memory usage and computational efficiency.
-  
+  A batch size of 16 balances memory usage with computational efficiency.
 - **Evaluation Strategy:**  
-  The model is evaluated at the end of each epoch to monitor performance and determine the best model based on the F1 score.
-  
+  Evaluation at the end of each epoch helps monitor performance and select the best model based on F1 score.
 - **Mixed Precision Training:**  
-  Uses both 16-bit and 32-bit floating point operations to speed up training and reduce memory usage without compromising model performance.
-
----
+  Uses both 16-bit and 32-bit operations to speed up training and reduce memory usage.
 
 ## Evaluation & Inference
 
 ### Evaluation:
-- The model's performance is evaluated using metrics like accuracy, precision, recall, F1 score, and confusion matrix.
-- A detailed classification report is generated with scikit-learn to assess performance on the test set.
+- The model's performance is measured using metrics such as accuracy, precision, recall, F1 score, and confusion matrix.
+- A detailed classification report is generated using scikit-learn to assess model performance on the test set.
 
 ### Inference:
-- A prediction function cleans, tokenizes, and passes new Urdu tweets through the model to output a sentiment label.
-- An interactive web interface is built using Gradio for real-time testing:
+- The prediction function cleans, tokenizes, and processes new Urdu tweets through the model to output a sentiment label.
+- An interactive Gradio interface allows real-time sentiment prediction:
   ```python
   import gradio as gr
 
@@ -181,8 +164,6 @@ training_args = TrainingArguments(
   if __name__ == "__main__":
       iface.launch()
   ```
-
----
 
 ## File Structure
 ```
@@ -207,8 +188,6 @@ urdu-tweet-sentiment-analysis/
 └── app.py                              # Entry point to launch the Gradio interface
 ```
 
----
-
 ## Additional Concepts
 
 ### GPU vs. CPU
@@ -218,27 +197,19 @@ urdu-tweet-sentiment-analysis/
   A specialized processor with many cores designed for parallel processing, ideal for large-scale numerical computations in deep learning.
 
 ### WandB (Weights & Biases)
-- A tool for tracking experiments, visualizing training progress, and managing hyperparameters. Although disabled in this project (`report_to="none"`), it is a valuable resource for monitoring and comparing model runs.
-
----
+Although WandB is disabled in this project (`report_to="none"`), it remains a valuable tool for tracking experiments, visualizing training progress, and managing hyperparameters.
 
 ## Future Improvements
-- **Expand Dataset:** Increase the dataset size for better model generalization.
+- **Expand Dataset:** Increase the dataset size for improved model generalization.
 - **Model Enhancement:** Experiment with different transformer models and architectures.
 - **Deployment:** Explore deploying the model as an API for integration with other applications.
 - **User Interface:** Enhance the web interface with additional features and visualizations.
 
----
-
 ## Contributing
 Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request with your improvements.
 
----
-
 ## License
 This project is licensed under the [MIT License](LICENSE).
-
----
 
 ## Acknowledgments
 - [Hugging Face](https://huggingface.co/) for providing state-of-the-art NLP models.
